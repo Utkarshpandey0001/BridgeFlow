@@ -178,15 +178,3 @@ curl http://localhost:3001/api/leaderboard
 | Frontend | Next.js 14 + Tailwind CSS |
 | Charts | Recharts |
 | Wallet | Hiro / Leather (@stacks/connect) |
-
----
-
-## 🏆 Hackathon
-
-Built for DoraHacks · Stacks Hackathon 2026
-
-Bounties targeted:
-- ✅ **Programmatic Bridge** — CCTP/xReserve integration in Clarity vault
-- ✅ **Bitcoin-Native Logic** — BTC volatility as bridge gating signal
-- ✅ **AI/Agent Trend** — Autonomous yield agent with personality customization
-- ✅ **Measurable Results** — Public performance leaderboard
