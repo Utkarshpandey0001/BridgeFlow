@@ -1,0 +1,32 @@
+{
+    "name": "bitflow-agent-service",
+    "version": "1.0.0",
+    "description": "Bitflow off-chain agent: oracle, decision engine, bridge executor, leaderboard API",
+    "main": "dist/server.js",
+    "scripts": {
+        "dev": "ts-node-dev --respawn --transpile-only src/server.ts",
+        "build": "tsc",
+        "start": "node dist/server.js",
+        "agent": "ts-node-dev --respawn --transpile-only src/cron.ts"
+    },
+    "dependencies": {
+        "@stacks/common": "^6.14.0",
+        "@stacks/network": "^6.14.0",
+        "@stacks/transactions": "^6.14.0",
+        "axios": "^1.6.7",
+        "better-sqlite3": "^9.4.3",
+        "cors": "^2.8.5",
+        "dotenv": "^16.4.4",
+        "express": "^4.18.2",
+        "node-cron": "^3.0.3"
+    },
+    "devDependencies": {
+        "@types/better-sqlite3": "^7.6.8",
+        "@types/cors": "^2.8.17",
+        "@types/express": "^4.17.21",
+        "@types/node": "^20.11.16",
+        "@types/node-cron": "^3.0.11",
+        "ts-node-dev": "^2.0.0",
+        "typescript": "^5.3.3"
+    }
+}

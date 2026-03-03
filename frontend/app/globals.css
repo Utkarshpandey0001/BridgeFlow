@@ -1,0 +1,204 @@
+@import "tailwindcss";
+
+:root {
+  --color-bg: #080B14;
+  --color-card: #0E1220;
+  --color-card-border: #1A2035;
+  --color-accent: #F7931A;
+  --color-accent-dim: rgba(247, 147, 26, 0.12);
+  --color-blue: #3B82F6;
+  --color-green: #22C55E;
+  --color-muted: #6B7280;
+  --color-surface: #12172A;
+}
+
+* {
+  font-family: 'Inter', system-ui, sans-serif;
+}
+
+h1, h2, h3, h4, h5 {
+  font-family: 'Space Grotesk', system-ui, sans-serif;
+}
+
+body {
+  background-color: var(--color-bg);
+  color: #F9FAFB;
+}
+
+/* Premium glassmorphism card */
+.glass-card {
+  background: var(--color-card);
+  border: 1px solid var(--color-card-border);
+  border-radius: 16px;
+  backdrop-filter: blur(12px);
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.glass-card:hover {
+  border-color: rgba(247, 147, 26, 0.3);
+  box-shadow: 0 0 30px rgba(247, 147, 26, 0.08);
+}
+
+/* Gradient text */
+.gradient-text {
+  background: linear-gradient(135deg, #F7931A 0%, #FCD34D 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* Orange CTA button */
+.btn-primary {
+  background: linear-gradient(135deg, #F7931A 0%, #E88010 100%);
+  color: white;
+  font-weight: 600;
+  border-radius: 12px;
+  padding: 12px 24px;
+  border: none;
+  cursor: pointer;
+  transition: all 0.2s;
+  font-size: 15px;
+  letter-spacing: -0.01em;
+}
+
+.btn-primary:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 8px 24px rgba(247, 147, 26, 0.4);
+}
+
+.btn-primary:active {
+  transform: translateY(0);
+}
+
+/* Ghost button */
+.btn-ghost {
+  background: transparent;
+  border: 1px solid var(--color-card-border);
+  color: #9CA3AF;
+  font-weight: 500;
+  border-radius: 10px;
+  padding: 10px 20px;
+  cursor: pointer;
+  transition: all 0.2s;
+  font-size: 14px;
+}
+
+.btn-ghost:hover {
+  border-color: #F7931A;
+  color: #F7931A;
+  background: rgba(247, 147, 26, 0.06);
+}
+
+/* Stat card */
+.stat-card {
+  background: var(--color-surface);
+  border: 1px solid var(--color-card-border);
+  border-radius: 12px;
+  padding: 20px;
+}
+
+/* Badge */
+.badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 12px;
+  font-weight: 600;
+  border-radius: 999px;
+  padding: 4px 10px;
+  letter-spacing: 0.03em;
+}
+
+.badge-green { background: rgba(34, 197, 94, 0.12); color: #22C55E; }
+.badge-blue  { background: rgba(59, 130, 246, 0.12); color: #60A5FA; }
+.badge-orange{ background: rgba(247, 147, 26, 0.12); color: #F7931A; }
+.badge-red   { background: rgba(239, 68, 68, 0.12); color: #F87171; }
+
+/* Nav link active */
+.nav-link {
+  color: #6B7280;
+  font-weight: 500;
+  font-size: 14px;
+  transition: color 0.15s;
+  text-decoration: none;
+}
+
+.nav-link:hover,
+.nav-link.active {
+  color: #F9FAFB;
+}
+
+/* Slider */
+input[type="range"] {
+  -webkit-appearance: none;
+  appearance: none;
+  height: 4px;
+  border-radius: 999px;
+  background: var(--color-card-border);
+  outline: none;
+  cursor: pointer;
+}
+
+input[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: #F7931A;
+  cursor: pointer;
+  box-shadow: 0 0 8px rgba(247, 147, 26, 0.5);
+}
+
+/* Pulse animation for live indicator */
+@keyframes pulse-orange {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.4; }
+}
+
+.pulse { animation: pulse-orange 2s infinite ease-in-out; }
+
+/* Smooth fade-in for page content */
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(16px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.fade-up {
+  animation: fadeUp 0.4s ease-out both;
+}
+
+/* Table */
+.data-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.data-table th {
+  color: #6B7280;
+  font-size: 12px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  padding: 12px 16px;
+  text-align: left;
+  border-bottom: 1px solid var(--color-card-border);
+}
+
+.data-table td {
+  padding: 14px 16px;
+  border-bottom: 1px solid rgba(26, 32, 53, 0.5);
+  font-size: 14px;
+}
+
+.data-table tr:last-child td {
+  border-bottom: none;
+}
+
+.data-table tbody tr {
+  transition: background 0.15s;
+}
+
+.data-table tbody tr:hover {
+  background: rgba(247, 147, 26, 0.03);
+}

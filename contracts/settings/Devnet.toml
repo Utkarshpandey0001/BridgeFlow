@@ -1,0 +1,18 @@
+[network]
+name = "devnet"
+
+[accounts.deployer]
+mnemonic = "state alter mention distance behave venture put suggest similar dune elegant teach"
+balance = 100_000_000_000_000
+
+[accounts.wallet_1]
+mnemonic = "pass prize possible lucky horse panic kidney warfare trick tumble smooth surge"
+balance = 100_000_000_000_000
+
+[accounts.wallet_2]
+mnemonic = "roof suggest shoulder announce ramp same lunar fury gaze midnight stumble maple"
+balance = 100_000_000_000_000
+
+[accounts.wallet_3]
+mnemonic = "discover witness beauty gravity lamp lamp lens above loan blame aware similar"
+balance = 100_000_000_000_000

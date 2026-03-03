@@ -1,0 +1,31 @@
+# Dependencies
+node_modules/
+
+# Environment files — NEVER commit
+.env
+.env.local
+.env*.local
+
+# Build outputs
+dist/
+.next/
+target/
+
+# Databases
+*.db
+*.db-shm
+*.db-wal
+
+# Logs
+*.log
+agent.log
+
+# OS
+.DS_Store
+
+# Clarinet / Stacks
+.cache/
+Clarinet.lock
+
+# Keep example env (safe to commit — no secrets)
+!.env.example
