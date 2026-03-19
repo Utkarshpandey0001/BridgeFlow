@@ -1,31 +1,12 @@
 'use client';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { useState } from 'react';
-import { Zap, BarChart3, Trophy, Settings } from 'lucide-react';
+import { Zap, BarChart3, Trophy, Settings, LogOut } from 'lucide-react';
+import { useWallet } from './WalletProvider';
 
 export default function Navbar() {
     const pathname = usePathname();
-    const [walletAddr, setWalletAddr] = useState<string | null>(null);
-
-    const connectWallet = async () => {
-        try {
-            const { showConnect } = await import('@stacks/connect');
-            showConnect({
-                appDetails: { name: 'Bitflow', icon: '/favicon.ico' },
-                onFinish: (data: any) => {
-                    const addr = data.userSession?.loadUserData()?.profile?.stxAddress?.testnet
-                        || data.userSession?.loadUserData()?.profile?.stxAddress?.mainnet;
-                    setWalletAddr(addr || 'Connected');
-                },
-                onCancel: () => { },
-                redirectTo: '/',
-            });
-        } catch {
-            // Fallback for demo: mock connection
-            setWalletAddr('SP1DEMO...ABC');
-        }
-    };
+    const { address, connected, connecting, connect, disconnectWallet } = useWallet();
 
     const navItems = [
         { href: '/dashboard', label: 'Dashboard', icon: BarChart3 },
@@ -62,16 +43,29 @@ export default function Navbar() {
 
                 {/* Wallet connect */}
                 <div className="flex items-center gap-3">
-                    {walletAddr ? (
-                        <div className="flex items-center gap-2 px-3 py-2 rounded-lg bg-[#0E1220] border border-[#1A2035]">
-                            <div className="w-2 h-2 rounded-full bg-green-400 pulse" />
-                            <span className="text-sm text-gray-300 font-mono">
-                                {walletAddr.slice(0, 6)}…{walletAddr.slice(-4)}
-                            </span>
+                    {connected && address ? (
+                        <div className="flex items-center gap-2">
+                            <div className="flex items-center gap-2 px-3 py-2 rounded-lg bg-[#0E1220] border border-[#1A2035]">
+                                <div className="w-2 h-2 rounded-full bg-green-400 pulse" />
+                                <span className="text-sm text-gray-300 font-mono">
+                                    {address.slice(0, 8)}…{address.slice(-4)}
+                                </span>
+                            </div>
+                            <button
+                                onClick={disconnectWallet}
+                                className="p-2 rounded-lg hover:bg-[#1A2035] transition-colors text-gray-500 hover:text-gray-300"
+                                title="Disconnect Wallet"
+                            >
+                                <LogOut className="w-4 h-4" />
+                            </button>
                         </div>
                     ) : (
-                        <button onClick={connectWallet} className="btn-primary text-sm !py-2 !px-4">
-                            Connect Wallet
+                        <button
+                            onClick={connect}
+                            disabled={connecting}
+                            className="btn-primary text-sm !py-2 !px-4"
+                        >
+                            {connecting ? 'Connecting…' : 'Connect Wallet'}
                         </button>
                     )}
                 </div>
