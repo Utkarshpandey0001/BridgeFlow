@@ -3,7 +3,10 @@ import { useState, useEffect } from 'react';
 import Navbar from '@/components/Navbar';
 import { PieChart, Pie, Cell, ResponsiveContainer, LineChart, Line, XAxis, YAxis, Tooltip, CartesianGrid } from 'recharts';
 import { ArrowUpRight, ArrowDownRight, Wallet, TrendingUp, GitFork, Zap } from 'lucide-react';
-import { fetchMarketData, fetchDecision, type MarketData, type DecisionResult } from '@/lib/stacks';
+import { fetchMarketData, fetchDecision, getVaultContract, getUsdcContract, type MarketData, type DecisionResult } from '@/lib/stacks';
+import { openContractCall } from '@stacks/connect';
+import { uintCV, contractPrincipalCV } from '@stacks/transactions';
+import { STACKS_TESTNET } from '@stacks/network';
 
 const CHART_COLORS = ['#F7931A', '#3B82F6', '#22C55E'];
 
@@ -43,10 +46,43 @@ export default function DashboardPage() {
     }, [agentType]);
 
     const handleDeposit = async () => {
+        if (!depositAmount || isNaN(Number(depositAmount))) return;
         setDepositStatus('loading');
-        await new Promise(r => setTimeout(r, 1500));
-        setDepositStatus('done');
-        setTimeout(() => { setShowDepositModal(false); setDepositStatus('idle'); setDepositAmount(''); }, 1500);
+
+        const vault = getVaultContract();
+        const usdc = getUsdcContract();
+
+        // Convert to micro-units (assuming 6 decimals like real USDC)
+        const amountMicro = Math.floor(Number(depositAmount) * 1000000);
+
+        try {
+            await openContractCall({
+                network: STACKS_TESTNET,
+                contractAddress: vault.address,
+                contractName: vault.name,
+                functionName: 'deposit',
+                functionArgs: [
+                    contractPrincipalCV(usdc.address, usdc.name),
+                    uintCV(amountMicro)
+                ],
+                onFinish: (data) => {
+                    console.log('Transaction submitted:', data.txId);
+                    setDepositStatus('done');
+                    setTimeout(() => {
+                        setShowDepositModal(false);
+                        setDepositStatus('idle');
+                        setDepositAmount('');
+                    }, 2500);
+                },
+                onCancel: () => {
+                    console.log('Transaction canceled');
+                    setDepositStatus('idle');
+                }
+            });
+        } catch (error) {
+            console.error('Failed to call deposit:', error);
+            setDepositStatus('idle');
+        }
     };
 
     return (
